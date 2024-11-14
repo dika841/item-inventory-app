@@ -1,8 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// schema.prisma
 
 generator client {
   provider = "prisma-client-js"
@@ -12,48 +8,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model Item {
-  id           Int        @id @default(autoincrement())
+  id           String           @id @default(uuid())
   name         String
-  sku          String     @unique 
-  quantity     Int        @default(0)
+  quantity     Int           @default(0)
   price        Float
   description  String?
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  categoryId   Int
-
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  categoryId   String
 
  
-  category     Category   @relation(fields: [categoryId], references: [id])
+  category     Category      @relation(fields: [categoryId], references: [id])
   transactions Transaction[]
 }
 
 model Category {
-  id           Int       @id @default(autoincrement())
-  name         String    @unique
-  description  String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id           String           @id @default(uuid())
+  name         String        @unique
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
-  
+
   items        Item[]
 }
 
-
 model Transaction {
-  id           Int       @id @default(autoincrement())
-  itemId       Int
+  id           String           @id @default(uuid())
+  itemId       String
   quantity     Int
   type         TransactionType
-  date         DateTime   @default(now())
-  remarks      String?
+  date         DateTime       @default(now())
 
  
-  item         Item       @relation(fields: [itemId], references: [id])
+  item         Item           @relation(fields: [itemId], references: [id])
 }
 
 enum TransactionType {
-  IN
-  OUT
+  IN   
+  OUT  
 }

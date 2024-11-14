@@ -1,20 +1,28 @@
 "use client";
 import React, { PropsWithChildren } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-import {
-  DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
+import { FileOutlined } from "@ant-design/icons";
 
 const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
+  const { Header, Content, Footer, Sider } = Layout;
   const [collapsed, setCollapsed] = React.useState(false);
-
+  const items = [
+    {
+      key: "sub2",
+      icon: <FileOutlined />,
+      label: "Inventory",
+      children: [
+        {
+          key: "1",
+          label: "Barang Masuk",
+        },
+        {
+          key: "2",
+          label: "Barang Keluar",
+        },
+      ],
+    },
+  ];
   const onCollapse = (collapsed: boolean) => {
     setCollapsed(collapsed);
   };
@@ -23,25 +31,12 @@ const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
     <Layout className="h-screen">
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo h-8 m-4 text-white text-center">Inventify</div>
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
-            Overview
-          </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            Analytics
-          </Menu.Item>
-          <SubMenu key="sub1" icon={<UserOutlined />} title="Users">
-            <Menu.Item key="3">Profile</Menu.Item>
-            <Menu.Item key="4">Settings</Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub2" icon={<TeamOutlined />} title="Teams">
-            <Menu.Item key="6">Team 1</Menu.Item>
-            <Menu.Item key="8">Team 2</Menu.Item>
-          </SubMenu>
-          <Menu.Item key="9" icon={<FileOutlined />}>
-            Documents
-          </Menu.Item>
-        </Menu>
+        <Menu
+          items={items}
+          theme="dark"
+          defaultSelectedKeys={["1"]}
+          mode="inline"
+        />
       </Sider>
 
       <Layout className="site-layout">
@@ -50,10 +45,9 @@ const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
           style={{ padding: 0, background: "#fff" }}
         />
         <Content className="mx-4 my-0">
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-            <Breadcrumb.Item>Overview</Breadcrumb.Item>
-          </Breadcrumb>
+          <Breadcrumb
+            items={[{ title: "Dashboard" }, { title: "Inventory" }]}
+          />
           <div
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}

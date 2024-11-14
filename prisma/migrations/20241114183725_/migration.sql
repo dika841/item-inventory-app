@@ -3,24 +3,22 @@ CREATE TYPE "TransactionType" AS ENUM ('IN', 'OUT');
 
 -- CreateTable
 CREATE TABLE "Item" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "sku" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL DEFAULT 0,
     "price" DOUBLE PRECISION NOT NULL,
     "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "categoryId" INTEGER NOT NULL,
+    "categoryId" TEXT NOT NULL,
 
     CONSTRAINT "Item_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Category" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -29,18 +27,14 @@ CREATE TABLE "Category" (
 
 -- CreateTable
 CREATE TABLE "Transaction" (
-    "id" SERIAL NOT NULL,
-    "itemId" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "itemId" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL,
     "type" "TransactionType" NOT NULL,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "remarks" TEXT,
 
     CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "Item_sku_key" ON "Item"("sku");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
