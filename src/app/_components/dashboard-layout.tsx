@@ -1,24 +1,32 @@
 "use client";
 import React, { PropsWithChildren } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-import { FileOutlined } from "@ant-design/icons";
+import { DatabaseOutlined, TransactionOutlined } from "@ant-design/icons";
+import { usePathname, useRouter } from "next/navigation";
 
 const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
   const { Header, Content, Footer, Sider } = Layout;
   const [collapsed, setCollapsed] = React.useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
   const items = [
     {
-      key: "sub2",
-      icon: <FileOutlined />,
+      key: "/",
+      icon: <DatabaseOutlined />,
       label: "Inventory",
+    },
+    {
+      key: "/inventory",
+      icon: <TransactionOutlined />,
+      label: "Transactions",
       children: [
         {
-          key: "1",
-          label: "Barang Masuk",
+          key: "/inventory/items-in",
+          label: "Items IN",
         },
         {
-          key: "2",
-          label: "Barang Keluar",
+          key: "/inventory/items-out",
+          label: "Items OUT",
         },
       ],
     },
@@ -26,15 +34,19 @@ const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
   const onCollapse = (collapsed: boolean) => {
     setCollapsed(collapsed);
   };
-
+  const onClick = (e: { key: string }) => {
+    router.push(e.key);
+  };
   return (
     <Layout className="h-screen">
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo h-8 m-4 text-white text-center">Inventify</div>
         <Menu
           items={items}
+          onClick={onClick}
           theme="dark"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={["/"]}
+          selectedKeys={[pathname]}
           mode="inline"
         />
       </Sider>

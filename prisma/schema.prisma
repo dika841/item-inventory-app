@@ -13,15 +13,30 @@ model Item {
   id           String           @id @default(uuid())
   name         String
   quantity     Int           @default(0)
-  price        Float
+  purchasePrice Int
+  sellingPrice Int
   description  String?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   categoryId   String
-
- 
+  markupRate    Float      @default(1.2) 
+  currencyId    Int                           
+  currency      Currency   @relation(fields: [currencyId], references: [id])
   category     Category      @relation(fields: [categoryId], references: [id])
   transactions Transaction[]
+}
+model Currency {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique         
+  code        String   @unique        
+  symbol      String                  
+  exchangeRate Float   @default(1.0)   
+  isDefault   Boolean  @default(false) 
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  items   Item[]              
 }
 
 model Category {

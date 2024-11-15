@@ -1,6 +1,8 @@
 export type TInventoryRequest = {
   name: string;
   quantity: number;
-  price: number;
+  purchasePrice: number;
+  sellingPrice: number;
   categoryId: string;
+  currencyId: number;
 };

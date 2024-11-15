@@ -6,6 +6,7 @@ import { useGetInventoryData } from "../_hooks/get-inventory-data";
 import { useRouter } from "next/navigation";
 import { TInventoryResponse } from "@/api/inventory/get-inventory-data/type";
 import { useDeleteInventoryData } from "../_hooks/delete-inventory";
+import { formatRupiah } from "@/utils/utils";
 
 export const TableInventory: FC = (): ReactElement => {
   const router = useRouter();
@@ -25,14 +26,25 @@ export const TableInventory: FC = (): ReactElement => {
       key: "quantity",
     },
     {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
+      title: "Purchase Price",
+      dataIndex: "purchasePrice",
+      key: "purchasePrice",
+      render: (_, record) =>
+        `${record.currency?.symbol || ""} ${formatRupiah(
+          record.purchasePrice
+        )}`,
+    },
+
+    {
+      title: "Selling Price",
+      dataIndex: "sellingPrice",
+      key: "sellingPrice",
+      render: (value: number) => formatRupiah(value),
     },
     {
       title: "Category",
       dataIndex: ["category", "name"],
-      key: "category.name",
+      key: "category",
     },
     {
       title: "Action",
@@ -60,7 +72,7 @@ export const TableInventory: FC = (): ReactElement => {
     },
   ];
   return (
-    <div className="space-y-4">
+    <section className="space-y-4">
       <Button onClick={() => router.push("/inventory/create")}>
         + Add Item
       </Button>
@@ -69,6 +81,6 @@ export const TableInventory: FC = (): ReactElement => {
         columns={columns}
         rowKey="id"
       />
-    </div>
+    </section>
   );
 };
