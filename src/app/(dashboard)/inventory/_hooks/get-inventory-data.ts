@@ -4,7 +4,7 @@ import { TMetaErrorResponse } from "@/common/types";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 export const useGetInventoryData = (): UseQueryResult<
-  TInventoryResponse,
+  TInventoryResponse[],
   TMetaErrorResponse
 > => {
   return useQuery({

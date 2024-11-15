@@ -5,6 +5,7 @@ export const GET = async () => {
     const data = await prisma.item.findMany({
       include: {
         category: true,
+        currency: true,
       },
     });
     return new Response(JSON.stringify(data), { status: 200 });
