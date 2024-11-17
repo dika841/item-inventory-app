@@ -14,9 +14,9 @@ import { FC, useState } from "react";
 import { useGetCategoryData } from "../../categories/_hooks/get-category-data";
 import { useCreateInventory } from "../_hooks/post-inventory.hook";
 import { useRouter } from "next/navigation";
-import { TInventoryRequest } from "@/api/inventory/post-inventory-data/type";
-import { useGetCurrencyData } from "../_hooks/get-currency.hook";
-import { TCurrencyResponse } from "@/api/get-currency-data/type";
+import { useGetCurrencyData } from "../../currencies/_hooks/get-currency.hook";
+import { TCurrencyResponse } from "@/api/currencies/type";
+import { TInventoryRequest } from "@/api/inventory/type";
 
 const { Option } = Select;
 

@@ -1,5 +1,5 @@
-import { DeleteInventoryData } from "@/api/inventory/delete-inventory-data/delete-inventory-data";
-import { TInventoryResponse } from "@/api/inventory/get-inventory-data/type";
+import { DeleteInventoryData } from "@/api/inventory/delete-inventory-data";
+import { TInventoryResponse } from "@/api/inventory/type";
 import { TMetaErrorResponse } from "@/common/types";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 

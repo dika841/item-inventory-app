@@ -1,13 +1,15 @@
 "use client";
+import { TCurrencyResponse } from "@/api/currencies/type";
 import { Button, message, Space, Table, TableProps } from "antd";
-import { useGetCategoryData } from "../_hooks/get-category-data";
-import { TCategoryResponse } from "@/api/categories/type";
-import { useDeleteCategoryData } from "../_hooks/delete-category.hook";
+import { FC, ReactElement } from "react";
+import { useGetCurrencyData } from "../_hooks/get-currency.hook";
+import { useDeleteCurrency } from "../_hooks/delete-currency.hook";
 
-export const CategoriesPage = () => {
-  const { data: categories, refetch } = useGetCategoryData();
-  const { mutate } = useDeleteCategoryData();
-  const columns: TableProps<TCategoryResponse>["columns"] = [
+export const CurrenciesPage: FC = (): ReactElement => {
+  const { data, refetch } = useGetCurrencyData();
+  const { mutate } = useDeleteCurrency();
+  console.log(data);
+  const columns: TableProps<TCurrencyResponse>["columns"] = [
     {
       title: "No",
       key: "no",
@@ -20,11 +22,21 @@ export const CategoriesPage = () => {
       key: "name",
     },
     {
+      title: "Symbol",
+      dataIndex: "symbol",
+      key: "symbol",
+    },
+    {
+      title: "Code",
+      dataIndex: "code",
+      key: "code",
+    },
+    {
       title: "Action",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button href={`/categories/${record.id}/update`} type="link">
+          <Button href={`/currencies/${record.id}/update`} type="link">
             Edit
           </Button>
           <Button
@@ -46,8 +58,8 @@ export const CategoriesPage = () => {
   ];
   return (
     <section className="space-y-4">
-      <Button href="/categories/create">+ Add Item</Button>
-      <Table dataSource={categories} columns={columns} rowKey="id" />
+      <Button href="/currencies/create">+ Add Item</Button>
+      <Table dataSource={data} columns={columns} rowKey="id" />
     </section>
   );
 };

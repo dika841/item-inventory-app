@@ -20,13 +20,12 @@ model Item {
   updatedAt    DateTime      @updatedAt
   categoryId   String
   markupRate    Float      @default(1.2) 
-  currencyId    Int                           
+  currencyId    String                           
   currency      Currency   @relation(fields: [currencyId], references: [id])
   category     Category      @relation(fields: [categoryId], references: [id])
-  transactions Transaction[]
 }
 model Currency {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(uuid())
   name        String   @unique         
   code        String   @unique        
   symbol      String                  
@@ -49,18 +48,4 @@ model Category {
   items        Item[]
 }
 
-model Transaction {
-  id           String           @id @default(uuid())
-  itemId       String
-  quantity     Int
-  type         TransactionType
-  date         DateTime       @default(now())
 
- 
-  item         Item           @relation(fields: [itemId], references: [id])
-}
-
-enum TransactionType {
-  IN   
-  OUT  
-}

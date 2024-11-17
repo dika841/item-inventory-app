@@ -1,5 +1,5 @@
-import { GetInventoryData } from "@/api/inventory/get-inventory-data/get-inventory-api";
-import { TInventoryResponse } from "@/api/inventory/get-inventory-data/type";
+import { GetInventoryData } from "@/api/inventory/get-inventory-api";
+import { TInventoryResponse } from "@/api/inventory/type";
 import { TMetaErrorResponse } from "@/common/types";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
