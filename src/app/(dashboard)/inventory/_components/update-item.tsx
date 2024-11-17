@@ -11,12 +11,12 @@ import {
   Col,
 } from "antd";
 import { FC, useEffect, useState } from "react";
-import { useGetCategoryData } from "../_hooks/get-category-data";
+import { useGetCategoryData } from "../../categories/_hooks/get-category-data";
 import { useParams, useRouter } from "next/navigation";
 import { TInventoryRequest } from "@/api/inventory/post-inventory-data/type";
-import { useGetOneInventoryData } from "../_hooks/get-one-inventory-data";
-import { useUpdateInventory } from "../_hooks/update-inventory-data";
-import { useGetCurrencyData } from "../_hooks/get-currency-data";
+import { useGetOneInventoryData } from "../_hooks/get-one-inventory.hook";
+import { useUpdateInventory } from "../_hooks/update-inventory.hook";
+import { useGetCurrencyData } from "../_hooks/get-currency.hook";
 
 const { Option } = Select;
 

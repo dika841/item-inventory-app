@@ -6,7 +6,7 @@ export const GET = async (
 ) => {
   const { id } = params;
   try {
-    const data = await prisma.item.findUnique({
+    const data = await prisma.category.findUnique({
       where: {
         id: id,
       },
@@ -29,7 +29,7 @@ export const PUT = async (
   const { id } = params;
   try {
     const body = await request.json();
-    const data = await prisma.item.update({
+    const data = await prisma.category.update({
       where: {
         id: id,
       },
@@ -37,20 +37,19 @@ export const PUT = async (
     });
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
+    return new Response("Failed to update category", { status: 500 });
     console.log(error);
-    return new Response("Failed to update item", { status: 500 });
   } finally {
     await prisma.$disconnect();
   }
 };
-
 export const DELETE = async (
   request: Request,
   { params }: { params: { id: string } }
 ) => {
   try {
     const { id } = params;
-    const data = await prisma.item.delete({
+    const data = await prisma.category.delete({
       where: {
         id: id,
       },
@@ -58,7 +57,7 @@ export const DELETE = async (
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
     console.log(error);
-    return new Response("Failed to delete item", { status: 500 });
+    return new Response("Failed to delete category", { status: 500 });
   } finally {
     await prisma.$disconnect();
   }

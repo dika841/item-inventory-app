@@ -18,15 +18,15 @@ const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
     {
       key: "/inventory",
       icon: <TransactionOutlined />,
-      label: "Transactions",
+      label: "Master Data",
       children: [
         {
-          key: "/inventory/items-in",
-          label: "Items IN",
+          key: "/categories",
+          label: "Categories",
         },
         {
-          key: "/inventory/items-out",
-          label: "Items OUT",
+          key: "/currencies",
+          label: "Currencies",
         },
       ],
     },
@@ -58,7 +58,14 @@ const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
         />
         <Content className="mx-4 my-0">
           <Breadcrumb
-            items={[{ title: "Dashboard" }, { title: "Inventory" }]}
+            items={[
+              { title: "Dashboard" },
+              {
+                title:
+                  pathname.charAt(1).toUpperCase() +
+                  String(pathname.replace("/", "").slice(1)),
+              },
+            ]}
           />
           <div
             className="site-layout-background"
