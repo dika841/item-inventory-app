@@ -13,10 +13,10 @@ import {
 import { FC, useEffect, useState } from "react";
 import { useGetCategoryData } from "../../categories/_hooks/get-category-data";
 import { useParams, useRouter } from "next/navigation";
-import { TInventoryRequest } from "@/api/inventory/post-inventory-data/type";
 import { useGetOneInventoryData } from "../_hooks/get-one-inventory.hook";
 import { useUpdateInventory } from "../_hooks/update-inventory.hook";
-import { useGetCurrencyData } from "../_hooks/get-currency.hook";
+import { useGetCurrencyData } from "../../currencies/_hooks/get-currency.hook";
+import { TInventoryRequest } from "@/api/inventory/type";
 
 const { Option } = Select;
 

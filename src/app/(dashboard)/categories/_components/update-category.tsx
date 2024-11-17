@@ -2,10 +2,11 @@
 
 import { Button, Form, Input, message } from "antd";
 import { useParams, useRouter } from "next/navigation";
-import { TCategoryRequest } from "@/api/categories/post-category/type";
+
 import { useUpdateCategory } from "../_hooks/update-category.hook";
 import { useGetOneCategoryData } from "../_hooks/get-one-category.hook";
 import { useEffect } from "react";
+import { TCategoryRequest } from "@/api/categories/type";
 
 export const UpdateCategory = () => {
   const router = useRouter();
@@ -36,11 +37,11 @@ export const UpdateCategory = () => {
         name: data.name,
       });
     }
-  });
+  }, [data, form]);
   return (
     <div>
       <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-        Add New Category
+        Update Category
       </h2>
       <Form form={form} name="categories" onFinish={onFinish} layout="vertical">
         {" "}

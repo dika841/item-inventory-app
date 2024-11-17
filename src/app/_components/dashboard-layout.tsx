@@ -5,7 +5,7 @@ import { DatabaseOutlined, TransactionOutlined } from "@ant-design/icons";
 import { usePathname, useRouter } from "next/navigation";
 
 const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
-  const { Header, Content, Footer, Sider } = Layout;
+  const { Content, Footer, Sider } = Layout;
   const [collapsed, setCollapsed] = React.useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -51,11 +51,7 @@ const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
         />
       </Sider>
 
-      <Layout className="site-layout">
-        <Header
-          className="site-layout-background"
-          style={{ padding: 0, background: "#fff" }}
-        />
+      <Layout className="site-layout py-8">
         <Content className="mx-4 my-0">
           <Breadcrumb
             items={[

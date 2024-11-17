@@ -1,6 +1,5 @@
-import { TCategoryResponse } from "@/api/categories/get-category-data/type";
-import { TCategoryRequest } from "@/api/categories/post-category/type";
-import { UpdateCategoryData } from "@/api/categories/update-category/update-category";
+import { TCategoryRequest, TCategoryResponse } from "@/api/categories/type";
+import { UpdateCategoryData } from "@/api/categories/update-category";
 import { TMetaErrorResponse } from "@/common/types";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 

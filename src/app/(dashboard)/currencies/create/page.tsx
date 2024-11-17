@@ -1,8 +1,8 @@
 import { NextPage } from "next";
 import { ReactElement } from "react";
-import { CurrenciesPage } from "./_components/currencies-page";
+import { CreateCurrencyPage } from "../_components/create-currency-page";
 
 const Page: NextPage = (): ReactElement => {
-  return <CurrenciesPage />;
+  return <CreateCurrencyPage />;
 };
 export default Page;

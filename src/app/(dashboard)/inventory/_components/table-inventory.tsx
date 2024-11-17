@@ -3,7 +3,7 @@
 import { Button, message, Space, Table, TableProps } from "antd";
 import { FC, ReactElement } from "react";
 import { useGetInventoryData } from "../_hooks/get-inventory.hook";
-import { TInventoryResponse } from "@/api/inventory/get-inventory-data/type";
+import { TInventoryResponse } from "@/api/inventory/type";
 import { useDeleteInventoryData } from "../_hooks/delete-inventory.hook";
 import { formatRupiah } from "@/utils/utils";
 

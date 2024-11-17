@@ -1,5 +1,5 @@
-import { DeleteCategoryData } from "@/api/categories/delete-category/delete-category";
-import { TCategoryResponse } from "@/api/categories/get-category-data/type";
+import { DeleteCategoryData } from "@/api/categories/delete-category";
+import { TCategoryResponse } from "@/api/categories/type";
 import { TMetaErrorResponse } from "@/common/types";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 

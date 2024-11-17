@@ -3,7 +3,7 @@
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 import { useCreateCategory } from "../_hooks/create-category.hook";
-import { TCategoryRequest } from "@/api/categories/post-category/type";
+import { TCategoryRequest } from "@/api/categories/type";
 
 export const CreateCategories = () => {
   const router = useRouter();

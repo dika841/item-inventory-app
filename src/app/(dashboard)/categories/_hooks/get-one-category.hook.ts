@@ -1,5 +1,5 @@
-import { TCategoryResponse } from "@/api/categories/get-category-data/type";
-import { GetOneCategoryData } from "@/api/categories/get-one-category/get-one-category";
+import { GetOneCategoryData } from "@/api/categories/get-one-category";
+import { TCategoryResponse } from "@/api/categories/type";
 import { TMetaErrorResponse } from "@/common/types";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
