@@ -12,6 +12,8 @@ export const GET = async () => {
   } catch (error) {
     console.log(error);
     return new Response("Failed to fetch all items", { status: 500 });
+  } finally {
+    await prisma.$disconnect();
   }
 };
 
@@ -25,5 +27,7 @@ export const POST = async (request: Request) => {
   } catch (error) {
     console.log(error);
     return new Response("Failed to create item", { status: 500 });
+  } finally {
+    await prisma.$disconnect();
   }
 };

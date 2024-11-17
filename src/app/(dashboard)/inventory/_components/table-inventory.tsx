@@ -2,18 +2,22 @@
 
 import { Button, message, Space, Table, TableProps } from "antd";
 import { FC, ReactElement } from "react";
-import { useGetInventoryData } from "../_hooks/get-inventory-data";
-import { useRouter } from "next/navigation";
+import { useGetInventoryData } from "../_hooks/get-inventory.hook";
 import { TInventoryResponse } from "@/api/inventory/get-inventory-data/type";
-import { useDeleteInventoryData } from "../_hooks/delete-inventory";
+import { useDeleteInventoryData } from "../_hooks/delete-inventory.hook";
 import { formatRupiah } from "@/utils/utils";
 
 export const TableInventory: FC = (): ReactElement => {
-  const router = useRouter();
   const { mutate } = useDeleteInventoryData();
   const { data, refetch } = useGetInventoryData();
   console.log(data);
   const columns: TableProps<TInventoryResponse>["columns"] = [
+    {
+      title: "No",
+      key: "no",
+      dataIndex: "no",
+      render: (_, __, index) => index + 1,
+    },
     {
       title: "Name",
       dataIndex: "name",
@@ -73,9 +77,7 @@ export const TableInventory: FC = (): ReactElement => {
   ];
   return (
     <section className="space-y-4">
-      <Button onClick={() => router.push("/inventory/create")}>
-        + Add Item
-      </Button>
+      <Button href="/inventory/create">+ Add Item</Button>
       <Table
         dataSource={data as unknown as TInventoryResponse[]}
         columns={columns}

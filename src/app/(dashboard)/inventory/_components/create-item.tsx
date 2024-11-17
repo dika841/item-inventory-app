@@ -11,11 +11,11 @@ import {
   Col,
 } from "antd";
 import { FC, useState } from "react";
-import { useGetCategoryData } from "../_hooks/get-category-data";
-import { useCreateInventory } from "../_hooks/post-inventory-data";
+import { useGetCategoryData } from "../../categories/_hooks/get-category-data";
+import { useCreateInventory } from "../_hooks/post-inventory.hook";
 import { useRouter } from "next/navigation";
 import { TInventoryRequest } from "@/api/inventory/post-inventory-data/type";
-import { useGetCurrencyData } from "../_hooks/get-currency-data";
+import { useGetCurrencyData } from "../_hooks/get-currency.hook";
 import { TCurrencyResponse } from "@/api/get-currency-data/type";
 
 const { Option } = Select;
