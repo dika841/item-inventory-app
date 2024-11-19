@@ -2,10 +2,9 @@
 import { Button, Col, Form, Input, InputNumber, message, Row } from "antd";
 import { useParams, useRouter } from "next/navigation";
 import { FC, ReactElement, useEffect } from "react";
-
 import { TCurrencyRequest } from "@/api/currencies/type";
+import { useGetOneCurrencyData } from "../../_hooks/get-one-currency.hook";
 import { useUpdateCurrency } from "../_hooks/update-currency.hook";
-import { useGetOneCurrencyData } from "../_hooks/get-one-currency.hook";
 
 export const UpdateCurrencyPage: FC = (): ReactElement => {
   const params = useParams();

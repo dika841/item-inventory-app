@@ -32,15 +32,25 @@ export const CurrenciesPage: FC = (): ReactElement => {
       key: "code",
     },
     {
+      title: "Exhange Rate",
+      dataIndex: "exchangeRate",
+      key: "exchangeRate",
+    },
+    {
       title: "Action",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button href={`/currencies/${record.id}/update`} type="link">
+          <Button
+            href={`/currencies/${record.id}/update`}
+            variant="filled"
+            color="primary"
+          >
             Edit
           </Button>
           <Button
-            type="link"
+            variant="filled"
+            color="danger"
             onClick={() =>
               mutate(record.id, {
                 onSuccess: () => {

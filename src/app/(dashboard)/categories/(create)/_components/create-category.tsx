@@ -1,47 +1,31 @@
 "use client";
-
 import { Button, Form, Input, message } from "antd";
-import { useParams, useRouter } from "next/navigation";
-
-import { useUpdateCategory } from "../_hooks/update-category.hook";
-import { useGetOneCategoryData } from "../_hooks/get-one-category.hook";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useCreateCategory } from "../_hooks/create-category.hook";
 import { TCategoryRequest } from "@/api/categories/type";
 
-export const UpdateCategory = () => {
+export const CreateCategories = () => {
   const router = useRouter();
-  const params = useParams();
   const [form] = Form.useForm();
-  const { mutate } = useUpdateCategory();
-  const { data } = useGetOneCategoryData(params.id as string);
+  const { mutate } = useCreateCategory();
   const onFinish = async (values: TCategoryRequest) => {
     try {
-      mutate(
-        { id: params.id as string, payload: values },
-        {
-          onSuccess: () => {
-            message.success("Category update successfully!");
-            form.resetFields();
-            router.push("/categories");
-          },
-        }
-      );
+      mutate(values, {
+        onSuccess: () => {
+          message.success("Category created successfully!");
+          form.resetFields();
+          router.push("/categories");
+        },
+      });
     } catch (error) {
       throw new Error("Failed to create category");
       console.log(error);
     }
   };
-  useEffect(() => {
-    if (data) {
-      form.setFieldsValue({
-        name: data.name,
-      });
-    }
-  }, [data, form]);
   return (
     <div>
       <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-        Update Category
+        Add New Category
       </h2>
       <Form form={form} name="categories" onFinish={onFinish} layout="vertical">
         {" "}

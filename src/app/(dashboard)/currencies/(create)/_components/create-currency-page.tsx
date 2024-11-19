@@ -2,8 +2,8 @@
 import { Button, Col, Form, Input, InputNumber, message, Row } from "antd";
 import { useRouter } from "next/navigation";
 import { FC, ReactElement } from "react";
-import { useCreateCurrency } from "../_hooks/create-currency.hook";
 import { TCurrencyRequest } from "@/api/currencies/type";
+import { useCreateCurrency } from "../_hooks/create-currency.hook";
 
 export const CreateCurrencyPage: FC = (): ReactElement => {
   const router = useRouter();
