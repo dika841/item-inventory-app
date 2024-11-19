@@ -1,7 +1,7 @@
 "use client";
 import React, { PropsWithChildren } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-import { DatabaseOutlined, TransactionOutlined } from "@ant-design/icons";
+import { DatabaseOutlined, FolderOpenOutlined } from "@ant-design/icons";
 import { usePathname, useRouter } from "next/navigation";
 
 const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
@@ -17,7 +17,7 @@ const DashboardLayout: React.FC<PropsWithChildren> = ({ children }) => {
     },
     {
       key: "/inventory",
-      icon: <TransactionOutlined />,
+      icon: <FolderOpenOutlined />,
       label: "Master Data",
       children: [
         {

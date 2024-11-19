@@ -24,11 +24,16 @@ export const CategoriesPage = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button href={`/categories/${record.id}/update`} type="link">
+          <Button
+            variant="filled"
+            color="primary"
+            href={`/categories/${record.id}/update`}
+          >
             Edit
           </Button>
           <Button
-            type="link"
+            variant="filled"
+            color="danger"
             onClick={() =>
               mutate(record.id, {
                 onSuccess: () => {

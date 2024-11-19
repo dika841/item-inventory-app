@@ -10,31 +10,49 @@ import {
   Row,
   Col,
 } from "antd";
-import { FC, useState } from "react";
-import { useGetCategoryData } from "../../categories/_hooks/get-category-data";
-import { useCreateInventory } from "../_hooks/post-inventory.hook";
-import { useRouter } from "next/navigation";
-import { useGetCurrencyData } from "../../currencies/_hooks/get-currency.hook";
-import { TCurrencyResponse } from "@/api/currencies/type";
+import { FC, useEffect, useState } from "react";
 import { TInventoryRequest } from "@/api/inventory/type";
+import { useParams, useRouter } from "next/navigation";
+import { useGetOneInventoryData } from "../../_hooks/get-one-inventory.hook";
+import { useUpdateInventory } from "../_hooks/update-inventory.hook";
+import { useGetCategoryData } from "@/app/(dashboard)/categories/_hooks/get-category-data";
+import { useGetCurrencyData } from "@/app/(dashboard)/currencies/_hooks/get-currency.hook";
 
-const { Option } = Select;
-
-export const CreateItemForm: FC = () => {
-  const { mutate } = useCreateInventory();
+export const UpdateItemForm: FC = () => {
+  const params = useParams();
+  const { data: itemData } = useGetOneInventoryData(params.id as string);
+  const { mutate } = useUpdateInventory();
   const [form] = Form.useForm();
   const { data: categories } = useGetCategoryData();
   const { data: currencies } = useGetCurrencyData();
   const router = useRouter();
   const [selectedCurrency, setSelectedCurrency] = useState<number>(1);
+  const { Option } = Select;
+
+  useEffect(() => {
+    if (itemData) {
+      setSelectedCurrency(
+        currencies?.find((c) => Number(c.id) === itemData.currencyId)
+          ?.exchangeRate || 1
+      );
+      form.setFieldsValue({
+        name: itemData.name,
+        quantity: itemData.quantity,
+        purchasePrice: itemData.purchasePrice,
+        sellingPrice: itemData.sellingPrice,
+        categoryId: itemData.categoryId,
+        currencyId: itemData.currencyId,
+      });
+    }
+  }, [itemData, form, currencies]);
 
   const onValuesChange = (
-    changedValues: { currencyId: number; purchasePrice: number },
+    changedValues: { currencyId: string; purchasePrice: number },
     allValues: { purchasePrice: number }
   ) => {
     if (changedValues.currencyId && currencies) {
       const selected = currencies.find(
-        (c) => Number(c.id) === changedValues.currencyId
+        (c) => c.id === changedValues.currencyId
       );
       if (selected) {
         setSelectedCurrency(selected.exchangeRate);
@@ -59,13 +77,15 @@ export const CreateItemForm: FC = () => {
 
   const onFinish = async (values: TInventoryRequest) => {
     try {
-      mutate(values, {
-        onSuccess: () => {
-          message.success("Item added successfully!");
-          form.resetFields();
-          router.push("/");
-        },
-      });
+      mutate(
+        { id: params.id as string, payload: values },
+        {
+          onSuccess: () => {
+            message.success("Item updated successfully!");
+            router.push("/");
+          },
+        }
+      );
     } catch (error) {
       message.error("Failed to submit the form.");
       console.error(error);
@@ -73,9 +93,9 @@ export const CreateItemForm: FC = () => {
   };
 
   return (
-    <div className="create-item-form">
+    <div className="update-item-form">
       <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-        Add New Inventory Item
+        Update Inventory Item
       </h2>
       <Form
         form={form}
@@ -89,8 +109,7 @@ export const CreateItemForm: FC = () => {
           purchasePrice: 0,
           sellingPrice: 0,
           categoryId: "",
-          currencyId:
-            currencies?.find((c: TCurrencyResponse) => c.isDefault)?.id || null,
+          currencyId: "",
         }}
       >
         <Row gutter={16}>
@@ -145,7 +164,7 @@ export const CreateItemForm: FC = () => {
               rules={[{ required: true, message: "Please select a currency!" }]}
             >
               <Select placeholder="Select currency">
-                {currencies?.map((currency: TCurrencyResponse) => (
+                {currencies?.map((currency) => (
                   <Option key={currency.id} value={currency.id}>
                     {currency.name} ({currency.code})
                   </Option>
@@ -158,7 +177,7 @@ export const CreateItemForm: FC = () => {
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item
-              label="Selling Price (IDR)"
+              label="Selling Price (IDR +20% Markup)"
               name="sellingPrice"
               rules={[
                 { required: true, message: "Selling price is required!" },
@@ -166,6 +185,7 @@ export const CreateItemForm: FC = () => {
             >
               <InputNumber
                 min={0}
+                disabled
                 style={{ width: "100%" }}
                 placeholder="Calculated selling price"
               />

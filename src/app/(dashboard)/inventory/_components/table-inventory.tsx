@@ -10,7 +10,6 @@ import { formatRupiah } from "@/utils/utils";
 export const TableInventory: FC = (): ReactElement => {
   const { mutate } = useDeleteInventoryData();
   const { data, refetch } = useGetInventoryData();
-  console.log(data);
   const columns: TableProps<TInventoryResponse>["columns"] = [
     {
       title: "No",
@@ -34,13 +33,11 @@ export const TableInventory: FC = (): ReactElement => {
       dataIndex: "purchasePrice",
       key: "purchasePrice",
       render: (_, record) =>
-        `${record.currency?.symbol || ""} ${formatRupiah(
-          record.purchasePrice
-        )}`,
+        `${record.currency?.symbol || ""} ${record.purchasePrice}`,
     },
 
     {
-      title: "Selling Price",
+      title: "Selling Price (20% Markup)",
       dataIndex: "sellingPrice",
       key: "sellingPrice",
       render: (value: number) => formatRupiah(value),
@@ -55,11 +52,16 @@ export const TableInventory: FC = (): ReactElement => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button href={`/inventory/${record.id}/update`} type="link">
+          <Button
+            variant="filled"
+            color="primary"
+            href={`/inventory/${record.id}/update`}
+          >
             Edit
           </Button>
           <Button
-            type="link"
+            variant="filled"
+            color="danger"
             onClick={() =>
               mutate(record.id, {
                 onSuccess: () => {
