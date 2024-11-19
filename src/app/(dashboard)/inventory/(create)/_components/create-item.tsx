@@ -18,9 +18,8 @@ import { useCreateInventory } from "../_hooks/create-inventory.hook";
 import { useGetCategoryData } from "@/app/(dashboard)/categories/_hooks/get-category-data";
 import { useGetCurrencyData } from "@/app/(dashboard)/currencies/_hooks/get-currency.hook";
 
-const { Option } = Select;
-
 export const CreateItemForm: FC = () => {
+  const { Option } = Select;
   const { mutate } = useCreateInventory();
   const [form] = Form.useForm();
   const { data: categories } = useGetCategoryData();
