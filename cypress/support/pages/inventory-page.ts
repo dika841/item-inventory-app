@@ -33,7 +33,6 @@ class InventoryPage {
         item.categoryId as unknown as string
       );
     }
-    // Handle currency select dengan cara yang lebih robust
     if (item.currencyId) {
       this.selectAntDropdown(
         this.elements.currencyInput(),
@@ -41,18 +40,14 @@ class InventoryPage {
       );
     }
 
-    // Handle category select
-
     this.elements.saveButton().click();
   }
   private selectAntDropdown(
     triggerElement: Cypress.Chainable<JQuery<HTMLElement>>,
     optionText: string
   ) {
-    // Klik element untuk membuka dropdown
     triggerElement.click();
 
-    // Tunggu dropdown terbuka dan cari option
     this.elements
       .openDropdown()
       .should("be.visible")
