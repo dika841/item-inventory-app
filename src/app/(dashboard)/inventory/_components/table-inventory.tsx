@@ -79,7 +79,9 @@ export const TableInventory: FC = (): ReactElement => {
   ];
   return (
     <section className="space-y-4">
-      <Button href="/inventory/create">+ Add Item</Button>
+      <Button id="add-item" href="/inventory/create">
+        + Add Item
+      </Button>
       <Table
         dataSource={data as unknown as TInventoryResponse[]}
         columns={columns}
