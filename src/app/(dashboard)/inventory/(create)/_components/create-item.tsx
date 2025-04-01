@@ -94,7 +94,7 @@ export const CreateItemForm: FC = () => {
           quantity: 1,
           purchasePrice: 0,
           sellingPrice: 0,
-          categoryId: "",
+          category: null,
           currencyId:
             currencies?.find((c: TCurrencyResponse) => c.isDefault)?.id || null,
         }}
@@ -179,20 +179,23 @@ export const CreateItemForm: FC = () => {
             </Form.Item>
           </Col>
         </Row>
-
-        <Form.Item
-          label="Category"
-          name="categoryId"
-          rules={[{ required: true, message: "Please select a category!" }]}
-        >
-          <Select placeholder="Select a category">
-            {categories?.map((item) => (
-              <Option key={item.id} value={item.id}>
-                {item.name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+        <Row>
+          <Col span={24}>
+            <Form.Item
+              label="Category"
+              name="categoryId"
+              rules={[{ required: true, message: "Please select a category!" }]}
+            >
+              <Select placeholder="Select a category">
+                {categories?.map((item) => (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
 
         <Form.Item style={{ textAlign: "center" }}>
           <div className="space-x-8">

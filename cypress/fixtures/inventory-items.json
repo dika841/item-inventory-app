@@ -1,0 +1,16 @@
+{
+  "validItem": {
+    "name": "Laptop Dell XPS",
+    "quantity": 10,
+    "purchasePrice": 15000000,
+    "sellingPrice": 17000000,
+    "currencyId": "IDR",
+    "categoryId": "Electronics"
+  },
+  "invalidItem": {
+    "name": "",
+    "quantity": -5,
+    "price": 0,
+    "currency": "IDR"
+  }
+}
