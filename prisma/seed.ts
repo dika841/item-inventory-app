@@ -4,7 +4,23 @@ const prisma = new PrismaClient();
 
 async function main() {
   console.log("Starting seeding...");
-
+  await prisma.users.createMany({
+    data: [
+      {
+        id: "1",
+        username: "Admin",
+        password: "12345678",
+        email: "admin@example.com",
+      },
+      {
+        id: "2",
+        username: "Randika",
+        password: "password",
+        email: "@example.com",
+      },
+    ],
+  });
+  console.log("Users successfully seeded.");
   await prisma.currency.createMany({
     data: [
       {
