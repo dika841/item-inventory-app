@@ -1,30 +1,38 @@
 import { PrismaClient } from "@prisma/client";
+import { hash } from "bcryptjs";
 
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.item.deleteMany();
+  await prisma.category.deleteMany();
+  await prisma.currency.deleteMany();
+  await prisma.users.deleteMany();
+
   console.log("Starting seeding...");
+
+  const hashedAdminPassword = await hash("12345678", 12);
+  const hashedUserPassword = await hash("password", 12);
+
   await prisma.users.createMany({
     data: [
       {
-        id: "1",
         username: "Admin",
-        password: "12345678",
+        password: hashedAdminPassword,
         email: "admin@example.com",
       },
       {
-        id: "2",
         username: "Randika",
-        password: "password",
-        email: "@example.com",
+        password: hashedUserPassword,
+        email: "randika@example.com",
       },
     ],
   });
   console.log("Users successfully seeded.");
-  await prisma.currency.createMany({
+
+  const currencies = await prisma.currency.createMany({
     data: [
       {
-        id: "1",
         name: "Indonesian Rupiah",
         code: "IDR",
         symbol: "Rp",
@@ -32,7 +40,6 @@ async function main() {
         isDefault: true,
       },
       {
-        id: "2",
         name: "US Dollar",
         code: "USD",
         symbol: "$",
@@ -40,7 +47,6 @@ async function main() {
         isDefault: false,
       },
       {
-        id: "3",
         name: "Japanese Yen",
         code: "JPY",
         symbol: "¥",
@@ -49,54 +55,59 @@ async function main() {
       },
     ],
   });
-
   console.log("Currencies successfully seeded.");
 
-  await prisma.category.createMany({
-    data: [
-      { id: "1", name: "Electronics" },
-      { id: "2", name: "Books" },
-      { id: "3", name: "Furniture" },
-    ],
+  const categories = await prisma.category.createMany({
+    data: [{ name: "Electronics" }, { name: "Books" }, { name: "Furniture" }],
+  });
+  console.log("Categories successfully seeded.");
+
+  const currency = await prisma.currency.findFirst();
+  const electronicsCategory = await prisma.category.findFirst({
+    where: { name: "Electronics" },
+  });
+  const furnitureCategory = await prisma.category.findFirst({
+    where: { name: "Furniture" },
   });
 
-  console.log("Categories successfully seeded.");
+  if (!currency || !electronicsCategory || !furnitureCategory) {
+    throw new Error("Required seed data not found");
+  }
 
   await prisma.item.createMany({
     data: [
       {
-        id: "1",
         name: "Laptop",
         quantity: 10,
         purchasePrice: 10000000,
         sellingPrice: 12000000,
         description: "High-performance laptop",
-        categoryId: "1",
-        currencyId: "1",
+        categoryId: electronicsCategory.id,
+        currencyId: currency.id,
+        markupRate: 1.2,
       },
       {
-        id: "2",
         name: "Smartphone",
         quantity: 25,
         purchasePrice: 5000000,
         sellingPrice: 6500000,
         description: "Latest model smartphone",
-        categoryId: "1",
-        currencyId: "1",
+        categoryId: electronicsCategory.id,
+        currencyId: currency.id,
+        markupRate: 1.3,
       },
       {
-        id: "3",
         name: "Bookshelf",
         quantity: 15,
         purchasePrice: 200000,
         sellingPrice: 300000,
         description: "Wooden bookshelf",
-        categoryId: "3",
-        currencyId: "1",
+        categoryId: furnitureCategory.id,
+        currencyId: currency.id,
+        markupRate: 1.5,
       },
     ],
   });
-
   console.log("Items successfully seeded.");
 
   console.log("Seeding completed.");
@@ -104,7 +115,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error("Seeding failed:", e);
     process.exit(1);
   })
   .finally(async () => {

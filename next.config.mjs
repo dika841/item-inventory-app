@@ -8,6 +8,13 @@ const nextConfig = {
       },
     ],
   },
+  redirects: () => [
+    {
+      source: "/",
+      destination: "/dashboard/inventory",
+      permanent: true,
+    },
+  ],
 };
 
 export default nextConfig;
